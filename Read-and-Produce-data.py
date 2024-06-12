@@ -51,7 +51,7 @@ def send_msg(host:str,
     """
 
     # Acknowledge the function opened
-    print(f'Opened `send_msg({host}, {queue_name_1}, {queue_name_2}, {queue_name_3}, {file_name})`')
+    print(f'Opened `send_msg({host}, {queue_name_1}, {queue_name_2}, {queue_name_3}, {file_name})`\n')
 
     # Open the file
     with open(file_name, 'r') as input_file:
@@ -112,6 +112,9 @@ def send_msg(host:str,
                     if pt_value == '30':
                         ch.basic_publish(exchange="", routing_key=queue_name_3, body=msg)
                         print(f'Sending {row} to {queue_name_3}')
+
+            # Acknowledge the file was entirely read in
+            print('\nFile successfully read in.')
 
 
         except pika.exceptions.AMQPConnectionError as e:
