@@ -51,7 +51,7 @@ def send_msg(host:str,
     """
 
     # Acknowledge the function opened
-    print(f'[#] Opened `send_msg({host}, {queue_name_1}, {queue_name_2}, {queue_name_3}, {file_name})`')
+    print(f'Opened `send_msg({host}, {queue_name_1}, {queue_name_2}, {queue_name_3}, {file_name})`')
 
     # Open the file
     with open(file_name, 'r') as input_file:
