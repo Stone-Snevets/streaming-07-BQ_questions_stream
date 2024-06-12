@@ -45,8 +45,6 @@ def output_to_file():
 
     # Open the output file
     #-> Use `w` to overwrite old material in the file
-    #TODO: 20s and 30s use `a` instead of `w` to append to the output instead of overwrite
-    #https://stackoverflow.com/questions/22441803/how-to-write-to-a-file-without-overwriting-current-contents
     with open(OUTPUT_FILE, 'w') as output_file:
 
         # Write a title for category of questions
@@ -60,21 +58,18 @@ def output_to_file():
 
             # Write the introduction remarks to the file
             #-> Cast the information to a string to successfully write
-            output_file.write(str(sorted(unique_intro)[i][0]))
-
-            # Separate the next column with a tab
-            output_file.write('  \t')
+            #-> Create a minimun size of this field at 24
+            output_file.write(f'{str(sorted(unique_intro)[i][0]):24}')
 
             # Write the number of occurances to the file
             #-> Cast the information to a string to successfully write
-            output_file.write(str(sorted(unique_intro)[i][1]))
-
-            # Separate the next column with a tab
-            output_file.write('\t\t')
+            #-> Create a minimun size of this field at 8
+            output_file.write(f'{str(sorted(unique_intro)[i][1]):8}')
 
             # Write the average hit point to the file
             #-> Cast the information to a string to successfully write
-            output_file.write(str(sorted(unique_intro)[i][2]))
+            #-> Round the floating values to 2 decimal places
+            output_file.write(f'{sorted(unique_intro)[i][2]:.2f}')
 
             # Place the next intro in a new line
             output_file.write('\n')
