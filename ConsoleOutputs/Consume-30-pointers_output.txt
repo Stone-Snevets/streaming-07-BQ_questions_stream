@@ -1,0 +1,22 @@
+Ready for action! Press CTRL + C to manually close the connection.
+Received and processed [1, 2, 30, _, 9, _, 1, conc  +pt Noun]
+Received and processed [1, 8, 30, _, C, 5c sec, 1, short sec question]
+Received and processed [1, 13, 30, T, 11, s bk, 0, conc bk, refers to readers]
+Received and processed [2, 5, 30, S, C, 4c sec, 13, vtgt]
+Received and processed [2, 10, 30, EC, _, sec, 12, 9 follow, NOT LAST WORD]
+Received and processed [2, 15, 30, T, 10, s bk, 0, conc, refers to readers]
+Received and processed [3, 3, 30, _, 14, _, 1, conc noun]
+Received and processed [3, 6, 30, EC, _, sec, 12, 4 follows, LAST WORD]
+Received and processed [3, 12, 30, 2, C, 4c sec, 4, answer question(s)]
+Received and processed [4, 2, 30, Q, 4, s bk, 6, conc 4pt]
+Received and processed [4, 8, 30, 4, C, 4c ch, 4, hd]
+Received and processed [4, 13, 30, E, _, 5c bk, 13, std bk]
+Received and processed [5, 3, 30, E, _, 7c bk, 14, std bk]
+Received and processed [5, 6, 30, EC, _, sec, 12, 5 follow, LAST WORD]
+Received and processed [5, 12, 30, _, C, 5c sec, 1, remember]
+User interrupted continuous listening process
+
+Writing results to a file...
+Results sent successfully.
+
+Closing Connection...
