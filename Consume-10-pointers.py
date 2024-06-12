@@ -18,19 +18,68 @@ Basic Steps:
 # ===== Preliminary ===========================================================
 
 # Imports
-import csv
 import pika
 import sys
 
 # Constants
 HOST = 'localhost'
+OUTPUT_FILE = 'Results.txt'
 QUEUE_NAME = '10_pt_queue'
+POINT_VALUE:int = 10
 
 # Create a lsit for all unique introductory remarks
 unique_intro = []
 
 
 # ===== Functions =============================================================
+
+# Write the results to an output file
+def output_to_file():
+    """
+    Function to take the results we found and write them to a common output file
+    This will condense our findings to just one file which makes for easier findings
+
+    NOTE: this will only run when the queue is manually shut down using CTRL + C
+
+    """
+
+    # Open the output file
+    #-> Use `w` to overwrite old material in the file
+    #TODO: 20s and 30s use `a` instead of `w` to append to the output instead of overwrite
+    #https://stackoverflow.com/questions/22441803/how-to-write-to-a-file-without-overwriting-current-contents
+    with open(OUTPUT_FILE, 'w') as output_file:
+
+        # Write a title for category of questions
+        output_file.write(f'\n{POINT_VALUE}-Point Questions:\n\n')
+
+        # Write a header row
+        output_file.write('Introductory Remarks\tCount\tAverage Hit Point\n')
+
+        # For each unique introduction
+        for i in range(len(unique_intro)):
+
+            # Write the introduction remarks to the file
+            #-> Cast the information to a string to successfully write
+            output_file.write(str(sorted(unique_intro)[i][0]))
+
+            # Separate the next column with a tab
+            output_file.write('  \t')
+
+            # Write the number of occurances to the file
+            #-> Cast the information to a string to successfully write
+            output_file.write(str(sorted(unique_intro)[i][1]))
+
+            # Separate the next column with a tab
+            output_file.write('\t\t')
+
+            # Write the average hit point to the file
+            #-> Cast the information to a string to successfully write
+            output_file.write(str(sorted(unique_intro)[i][2]))
+
+            # Place the next intro in a new line
+            output_file.write('\n')
+        
+
 
 # Return a list of just the introductory remarks
 def list_intros():
@@ -104,19 +153,15 @@ def avg_hit_pt(question):
     #-> Location type
     intro_tuple = (q_type, a_type, loc_type)
 
-    print(intro_tuple, hit_pt)
-
     # Check if the tuple already exists in our `unique_intro` list
     #-> Call `list_intros()` to get a list of all the intros we have so far
     if intro_tuple in list_intros():
-        print('MATCH')
         # If it does, call the `find_existing_list` function
         #-> It will find the correct list, increment its counter, and re-calculate its average hit point
         find_existing_list(intro_tuple, float(hit_pt))
 
     # If this is a new intro combo, append it to the list
     else:
-        print('UNIQUE')
         unique_intro.append([intro_tuple, 1, int(hit_pt)])
 
 
@@ -140,9 +185,8 @@ def callback(ch, method, properties, body):
     avg_hit_pt(body.decode())
 
     # Acknowledge that the message is received and processed
-    #print(f'Received and processed {body.decode()}')
+    print(f'Received and processed {body.decode()}')
     ch.basic_ack(delivery_tag = method.delivery_tag)
-
 
 
 # Main function
@@ -196,12 +240,23 @@ def main(host_name = 'localhost', queue_name = 'default_queue'):
     # If user manually ends the system
     except KeyboardInterrupt:
         print('User interrupted continuous listening process')
+
+        # Write results to a file
+        print('\nWriting results to a file...')
+        output_to_file()
+
+        # Acknowledge that the results were written to the file
+        print('Results sent successfully.\n')
+
+        # Exit the system
         sys.exit(0)
 
-    # Close the connection when we are done
+    # Close the connection
     finally:
+        # Close the connection
         print('Closing Connection...')
         conn.close()
+
 
 # ===== Main ==================================================================
 if __name__ == '__main__':
