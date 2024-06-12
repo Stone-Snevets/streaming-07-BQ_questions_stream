@@ -28,6 +28,8 @@ Each CSV file contains shorthand versions of the introductory remarks for each q
     * NOTE: If there are multiple introductions, the consumer takes into account the combination of them
     * "Give a Complete Answer" is different from "Scripture-Text Question. Give a Complete Answer"
 4. Once all the necessary averages are calculated, each consumer will write their results to a common output file.
+    * NOTE: The information is written to the output file once the program is manually shut down
+    * Close the queues in ascending order (10, 20, 30 point questions) for best results.
 
 ## Screenshots:
-Coming Soon...
+![image](Images/BQ_ConsoleOutput.png)
